@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Garys_Garage
 {
@@ -8,44 +9,72 @@ namespace Garys_Garage
         {
             Zero fxs = new Zero()
             {
-                MainColor = "Black"
+                CurrentChargePercentage = 35
+            };
+            Zero fx = new Zero()
+            {
+                CurrentChargePercentage = 45
             };
             Tesla modelS = new Tesla()
             {
-                MainColor = "Blue"
+                CurrentChargePercentage = 33
             };
-            Cessna mx410 = new Cessna()
+
+            List<IElectric> electricVehicles = new List<IElectric>() {
+                fx, fxs, modelS
+              };
+
+            Console.WriteLine("Electric Vehicles");
+            foreach (IElectric ev in electricVehicles)
             {
-                MainColor = "Red"
-            };
-            Ram challenger = new Ram()
+                Console.WriteLine($"The current charge level is {ev.CurrentChargePercentage} percent");
+            }
+
+            foreach (IElectric ev in electricVehicles)
             {
-                MainColor = "Yellow"
+                // This should charge the vehicle to 100%
+                ev.ChargeBattery();
+                Console.WriteLine("Charging the battery.");
+            }
+
+            foreach (IElectric ev in electricVehicles)
+            {
+                Console.WriteLine($"The current charge level is {ev.CurrentChargePercentage} percent");
+            }
+
+            /***********************************************/
+
+            Ram ram = new Ram()
+            {
+                CurrentTankPercentage = 67
             };
 
-            fxs.Drive();
-            fxs.Turn("left");
-            fxs.Stop();
+            Cessna cessna150 = new Cessna()
+            {
+                CurrentTankPercentage = 15
+            };
 
-            Console.WriteLine();
+            List<IGas> gasVehicles = new List<IGas>() {
+                ram, cessna150
+                };
 
-            modelS.Drive();
-            modelS.Turn("right");
-            modelS.Stop();
+            Console.WriteLine("Gas Vehicles");
+            foreach (IGas gv in gasVehicles)
+            {
+                Console.WriteLine($"The current tank level is {gv.CurrentTankPercentage} percent");
+            }
 
-            Console.WriteLine();
+            foreach (IGas gv in gasVehicles)
+            {
+                // This should completely refuel the gas tank
+                gv.RefuelTank();
+                Console.WriteLine("Refilling the tank.");
+            }
 
-            mx410.Drive();
-            mx410.Turn("left");
-            mx410.Stop();
-
-            Console.WriteLine();
-
-            challenger.Drive();
-            challenger.Turn("right");
-            challenger.Stop();
-
-
+            foreach (IGas gv in gasVehicles)
+            {
+                Console.WriteLine($"The current tank level is {gv.CurrentTankPercentage} percent");
+            }
         }
     }
 }
